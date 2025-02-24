@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Suisse Virtual</title>
+    <link rel="stylesheet" href="log-in.css">
+</head>
+<body>
+    <section class="login">
+        <h1>Login</h1>
+        <p>Please enter your email and password to log in.</p>
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p id="error-message" style="color: red; display: none;">You are not recognized. Please try again.</p>
+    </section>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Replace with actual admin credentials check logic
+            const adminUsers = [
+                { email: 'shah.mdzaidee@gmail.com', password: 'Zaidee999' },
+                { email: 'admin2@example.com', password: 'password2' },
+                { email: 'admin3@example.com', password: 'password3' }
+            ];
+
+            const user = adminUsers.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                window.location.href = 'admin.html';
+            } else {
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

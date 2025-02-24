@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Suisse Virtual</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <p>Welcome to the admin dashboard. Here you can manage pilot applications and user accounts.</p>
+    </header>
+    <nav class="navbar">
+        <button onclick="showAdminAccess()">Admin Access</button>
+        <button onclick="showChangePassword()">Change Password</button>
+        <button onclick="showAdminUsers()">View Admin Users</button>
+    </nav>
+    <section class="inbox">
+        <h2>Pilot Applications</h2>
+        <div class="application" onclick="toggleApplicationDetails(this)">
+            <h3>New Application from John Doe</h3>
+            <div class="application-details">
+                <p>Email: john.doe@example.com</p>
+                <p>Age: 25</p>
+                <p>Infinite Flight Grade: 4</p>
+                <p>Total Flight Hours: 600</p>
+                <p>Landings in the past 90 days: 70</p>
+                <p>Violation Ratio: 0.05</p>
+                <p>Violations in the past year: 1</p>
+                <p>Discord Username: johndoe#1234</p>
+                <p>Active Infinite Flight Subscription: Yes</p>
+                <p>Blacklisted by IFVARB: No</p>
+                <p>Active IFC Account: Yes</p>
+                <p><a href="path/to/uploaded/file.jpg" target="_blank">View Uploaded File</a></p>
+            </div>
+        </div>
+        <!-- Add more applications here -->
+    </section>
+
+    <div id="admin-access-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('admin-access-modal')">&times;</span>
+            <h2>Admin Access</h2>
+            <form id="admin-access-form">
+                <label for="new-email">New Admin Email:</label>
+                <input type="email" id="new-email" name="new-email" required>
+                <label for="new-password">New Admin Password:</label>
+                <input type="password" id="new-password" name="new-password" required>
+                <button type="submit">Add Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="change-password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('change-password-modal')">&times;</span>
+            <h2>Change Password</h2>
+            <form action="change-password.php" method="post">
+                <label for="current-password">Current Password:</label>
+                <input type="password" id="current-password" name="current-password" required>
+                <label for="new-password">New Password:</label>
+                <input type="password" id="new-password" name="new-password" required>
+                <button type="submit">Change Password</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-users-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('admin-users-modal')">&times;</span>
+            <h2>Admin Users</h2>
+            <ul id="admin-users-list">
+                <!-- Admin users will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showAdminAccess() {
+            document.getElementById('admin-access-modal').style.display = 'block';
+        }
+
+        function showChangePassword() {
+            document.getElementById('change-password-modal').style.display = 'block';
+        }
+
+        function showAdminUsers() {
+            document.getElementById('admin-users-modal').style.display = 'block';
+            loadAdminUsers();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function toggleApplicationDetails(element) {
+            const details = element.querySelector('.application-details');
+            if (details.style.display === 'none' || details.style.display === '') {
+                details.style.display = 'block';
+            } else {
+                details.style.display = 'none';
+            }
+        }
+
+        document.getElementById('admin-access-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Add your form submission logic here (e.g., AJAX request)
+            window.location.href = 'user-added.html';
+        });
+
+        function loadAdminUsers() {
+            const adminUsersList = document.getElementById('admin-users-list');
+            adminUsersList.innerHTML = ''; // Clear the list
+
+            // Fetch the admin users (this is just a placeholder, replace with actual data fetching logic)
+            const adminUsers = [
+                { email: 'admin1@example.com' },
+                { email: 'admin2@example.com' },
+                { email: 'admin3@example.com' }
+            ];
+
+            adminUsers.forEach(user => {
+                const listItem = document.createElement('li');
+                listItem.textContent = user.email;
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.onclick = function() {
+                    removeAdminUser(user.email);
+                };
+                listItem.appendChild(removeButton);
+                adminUsersList.appendChild(listItem);
+            });
+        }
+
+        function removeAdminUser(email) {
+            // Add your logic to remove the admin user (e.g., AJAX request)
+            alert(`Admin user ${email} removed`);
+            loadAdminUsers(); // Refresh the list
+        }
+    </script>
+</body>
+</html>
